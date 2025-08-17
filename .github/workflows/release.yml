@@ -1,0 +1,40 @@
+name: auto release
+
+on:
+  push:
+    tags:
+      - 'L*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Get short commit hash
+        id: hash
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Replace placeholder in CHANGELOG.md
+        run: |
+          sed -i "s/{COMMIT_HASH}/${COMMIT_HASH}/g" CHANGELOG.md
+
+      - name: Create release
+        id: release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Englishv2.aul2
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: ./src/Englishv2.aul2
+          asset_name: Englishv2.aul2
+          asset_content_type: application/octet-stream

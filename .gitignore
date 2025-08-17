@@ -1,0 +1,15 @@
+# ignore extra system files
+.DS_Store
+Thumbs.db
+
+# things that aren't necessary for the project but eh
+# Who The Fuck Cares
+__pycache__/
+*.pyc
+node_modules/
+*.log
+*.tmp
+*.bak
+*.swp
+*.sublime-workspace
+*.vscode/
