@@ -10,18 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: checkout repo
         uses: actions/checkout@v3
 
-      - name: Get short commit hash
+      - name: get short commit hash
         id: hash
         run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-      - name: Replace placeholder in CHANGELOG.md
+      - name: replace placeholder in CHANGELOG.md
         run: |
           sed -i "s/{COMMIT_HASH}/${COMMIT_HASH}/g" CHANGELOG.md
 
-      - name: Create release
+      - name: create release
         id: release
         uses: softprops/action-gh-release@v1
         with:
@@ -29,12 +29,14 @@ jobs:
           name: ${{ github.ref_name }}
           body_path: CHANGELOG.md
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_TOKEN }}
 
-      - name: Upload Englishv2.aul2
+      - name: upload Englishv2.aul2
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.release.outputs.upload_url }}
           asset_path: ./src/Englishv2.aul2
           asset_name: Englishv2.aul2
           asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.UPLOAD_TOKEN }}
