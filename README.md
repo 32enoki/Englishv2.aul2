@@ -3,7 +3,7 @@ and drop it to `C:\ProgramData\aviutl2\Language`, have fun
 
 ![banner](assets/aviutl2_JCYc4ugWsB.png)
 
-# Englishv2.aul2 for ![logo](assets/AviUtl.png) AviUtl Exedit2
+# Englishv2.aul2 for ![logo](assets/AviUtl.png) AviUtl ExEdit2
 
 it's English.aul2 but improved
 
